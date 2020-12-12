@@ -1,6 +1,6 @@
 import re
 
-def scrape_variables(template: str) -> list:
+def scrape_variables(template: str) -> tuple:
     """
     returns a list of the template variables inside the curly braces from input string s
     """
@@ -20,5 +20,5 @@ def decompose_variable_and_default(template_variable: str) -> list:
     # assign the default value if there is one, else None
     default_value = _[0] if _ else None
 
-    return [variable_name, default_value]
+    return (variable_name, default_value)
 
