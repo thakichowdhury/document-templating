@@ -1,13 +1,5 @@
 #! /usr/bin/env python3
 
-"""
-TODO:
-    - abstract out variables to scrape from template
-    - abstract out default values to pull from template
-        - e.g. ${contact_name:Hiring Manager}
-
-"""
-
 from os import path
 # from scraper import scrape_variables_and_defaults
 import scraper
