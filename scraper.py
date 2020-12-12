@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 import re
 
 def scrape_variables(template: str) -> tuple:
