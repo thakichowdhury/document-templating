@@ -7,7 +7,7 @@ def scrape_variables(template: str) -> tuple:
     # find all substrings between pairs of square brackets { }
     return re.findall(r'{([^}]*)}', template)
 
-def decompose_variable_and_default(template_variable: str) -> list:
+def decouple_variable_and_default(template_variable: str) -> list:
     """
     returns a list of the variable name and default value from the input template variable
     """
