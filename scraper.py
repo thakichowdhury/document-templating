@@ -11,19 +11,14 @@ def decompose_variable_and_default(template_variable: str) -> list:
     """
     returns a list of the variable name and default value from the input template variable
     """
-    variable = template_variable
-    default = None
+    variable_name: str
+    default_value: str
 
-    # if template_variable has an equal sign, it means it has a default
-    # find the index of the '=' in the string, else it will be -1
-    i = template_variable.find('=')
+    # split the template variable by the equal sign and destructure assign variable_name and _ as default value (if there is one)
+    variable_name, *_ = template_variable.split('=')
 
-    # if there's a default
-    if i != -1:
-        # find the variable (substring before the equal sign)
-        variable = template_variable[:i]
-        # find the default (substring after the equal sign)
-        default = template_variable[i + 1:]
+    # assign the default value if there is one, else None
+    default_value = _[0] if _ else None
 
-    return [variable, default]
+    return [variable_name, default_value]
 
