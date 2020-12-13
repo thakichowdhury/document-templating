@@ -22,6 +22,12 @@ def create_dir_if_not_exists(dirname: str) -> str:
 
     return os.path.exists(dirname)
 
+def dir_is_empty(dirname: str) -> bool:
+    """
+    Returns bool indicating if dir is empty
+    """
+    return not os.listdir(dirname)
+
 def generate_menu_options(options: list, menu_name = 'MENU') -> None:
     border_char = '*'
     border_width = 30
