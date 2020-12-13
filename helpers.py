@@ -29,6 +29,9 @@ def dir_is_empty(dirname: str) -> bool:
     return not os.listdir(dirname)
 
 def generate_menu_options(options: list, menu_name = 'MENU') -> None:
+    """
+    Generates a menu header and menu options on the command line
+    """
     border_char = '*'
     border_width = 30
     border_height = 5
