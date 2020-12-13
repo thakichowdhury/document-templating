@@ -88,7 +88,6 @@ if __name__ == '__main__':
     helpers.generate_menu_options(os.listdir(templates_dir))
 
     choice: int = int(input('What template would you like to use? '))
-    print('\n')
 
     template_name: str = available_templates[choice]
     template: str = get_template(f'{templates_dir}/{template_name}')
