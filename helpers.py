@@ -11,6 +11,17 @@ def get_abs_file_path(rel_path: str, file_path: str) -> str:
 
     return abs_file_path
 
+def create_dir_if_not_exists(dirname: str) -> str:
+    """
+    Creates dir if it does not exist
+    """
+    # check if there is a templates dir
+    if not os.path.exists(dirname):
+        # create one if none exist
+        os.makedirs(dirname)
+
+    return os.path.exists(dirname)
+
 def generate_menu_options(options: list, menu_name = 'MENU') -> None:
     border_char = '*'
     border_width = 30
