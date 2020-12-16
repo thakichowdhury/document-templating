@@ -66,8 +66,9 @@ def load_data(key: str) -> str:
     data: str = ''
     with open('data.dat', 'r') as json_file:
         try:
-            data = json.load(json_file)
-            data = data[key]
+            info = json.load(json_file)
+            value = info[key]
+            data = value
         except:
             print(f'NO AVAILABLE DATA FOR KEY {key}')
 

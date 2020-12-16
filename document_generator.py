@@ -72,19 +72,20 @@ def create_example_template(dirname) -> str:
 
 # execute the script
 if __name__ == '__main__':
-    # check if there's a templates
+    # load the templates directory path
     templates_dir: str = helpers.load_data(TEMPLATES_KEY)
-    # CHECK IF THE ACTUAL DIRECTORY EXISTS
-
-    documents_dir: str = helpers.load_data(TRANSFORMED_DOCUMENTS_KEY)
-    # CHECK IF THE ACTUAL DIRECTORY EXISTS
 
     # if there doesn't exists a templates directory
     if not templates_dir or not os.path.exists(templates_dir):
         helpers.generate_menu_header('SETUP')
         templates_dir: str = setup.setup_templates_dir()
 
-        documents_dir_path: str = helpers.setup_documents_dir(TRANSFORMED_DOCUMENTS_KEY)
+    # load the transformed documents directory path
+    documents_dir: str = helpers.load_data(TRANSFORMED_DOCUMENTS_KEY)
+
+    # if there doesn't exists a transformed documents directory
+    if not documents_dir or not os.path.exists(documents_dir):
+        documents_dir: str = helpers.setup_documents_dir(TRANSFORMED_DOCUMENTS_KEY)
     
     # load all the templates and enumerate them on a menu
     available_templates: List[str] = os.listdir(templates_dir)
