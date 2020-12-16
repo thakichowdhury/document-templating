@@ -76,7 +76,7 @@ if __name__ == '__main__':
     templates_dir: str = helpers.load_data(TEMPLATES_KEY)
     # CHECK IF THE ACTUAL DIRECTORY EXISTS
 
-    documents_dir: str = helpers.load_data(DOCUMENTS_KEY)
+    documents_dir: str = helpers.load_data(TRANSFORMED_DOCUMENTS_KEY)
     # CHECK IF THE ACTUAL DIRECTORY EXISTS
 
     # if there doesn't exists a templates directory
@@ -84,7 +84,7 @@ if __name__ == '__main__':
         helpers.generate_menu_header('SETUP')
         templates_dir: str = setup.setup_templates_dir()
 
-        documents_dir_path: str = helpers.setup_documents_dir(DOCUMENTS_KEY)
+        documents_dir_path: str = helpers.setup_documents_dir(TRANSFORMED_DOCUMENTS_KEY)
     
     # load all the templates and enumerate them on a menu
     available_templates: List[str] = os.listdir(templates_dir)
