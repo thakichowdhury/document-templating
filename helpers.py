@@ -34,7 +34,7 @@ def dir_is_empty(dirname: str) -> bool:
     return not os.listdir(dirname)
 
 def setup_documents_dir(dir_name: str) -> str:
-    print(f'Please select a location to store your {dir_name}.')
+    print(f'Choose a location to store your {dir_name}.')
 
     dir_path: str = filedialog.askdirectory(title=f'Select folder to store your {dir_name}')
     documents_dir_path: str = dir_path + f'/{dir_name}'
@@ -63,13 +63,17 @@ def save_data(data: dict) -> bool:
     return True
 
 def load_data(key: str) -> str:
+    data: str = ''
     with open('data.dat', 'r') as json_file:
-        data = json.load(json_file)
+        try:
+            data = json.load(json_file)
+            data = data[key]
+        except:
+            print(f'NO AVAILABLE DATA FOR KEY {key}')
 
-        if key in data:
-            return data[key]
+    return data
         
-        raise Exception(f'No key in data matches the key provided {key}')
+        # raise Exception(f'No key in data matches the key provided {key}')
 
 def generate_menu_header(menu_name: str = 'MENU', border_char: str = '*', border_width: int = 30, border_height: int = 5) -> None:
     """
