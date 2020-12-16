@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import os
+import json
 from typing import List
 
 def get_file_dir(file_path: str) -> str:
@@ -28,6 +29,20 @@ def dir_is_empty(dirname: str) -> bool:
     Returns bool indicating if dir is empty
     """
     return not os.listdir(dirname)
+
+def save_data(data: dict) -> bool:
+    # load the dir locations JSON data
+    with open('data.dat', 'w+') as outfile:
+        json.dump(data, outfile)
+
+def load_data(key: str) -> str:
+    with open('data.dat', 'r') as json_file:
+        data = json.load(json_file)
+
+        if key in data:
+            return data[key]
+        
+        raise Exception(f'No key in data matches the key provided {key}')
 
 def generate_menu_header(menu_name: str = 'MENU', border_char: str = '*', border_width: int = 30, border_height: int = 5) -> None:
     """
