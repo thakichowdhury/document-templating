@@ -1,8 +1,13 @@
 #! /usr/bin/env python3
 
 import os
+
 import scraper
 import helpers
+import setup
+
+from typing import List
+from constants import TEMPLATES_KEY, DOCUMENTS_KEY
 
 def substitute_template_variables(template: str) -> tuple:
     # scrape the variables and default values from the template
@@ -46,16 +51,11 @@ def get_template(rel_path: str) -> str:
 
     return template
 
-def create_cover_letter(company_name: str, cover_letter_content: str) -> str:
-    # get path for new cover letter
-    new_cover_letter_path: str = helpers.get_abs_file_path(f'_cover-letters/{company_name}-cover_letter.txt', __file__)
+def create_cover_letter(path: str, company_name: str, document_body: str) -> str:
+    with open(path, 'w') as f:
+        f.write(document_body)
 
-    # save template changes to new cover letter
-    f = open(new_cover_letter_path, 'w')
-    f.write(cover_letter_content)
-    f.close()
-
-    return new_cover_letter_path
+    return path
 
 def create_example_template(dirname) -> str:
     """
@@ -72,31 +72,39 @@ def create_example_template(dirname) -> str:
 
 # execute the script
 if __name__ == '__main__':
-    templates_dir: str = os.path.abspath('templates')
+    # check if there's a templates
+    templates_dir: str = helpers.load_data(TEMPLATES_KEY)
+    # CHECK IF THE ACTUAL DIRECTORY EXISTS
 
-    helpers.create_dir_if_not_exists(templates_dir)
+    documents_dir: str = helpers.load_data(DOCUMENTS_KEY)
+    # CHECK IF THE ACTUAL DIRECTORY EXISTS
 
-    if helpers.dir_is_empty(templates_dir):
-        # create and place an example template in the dir
-        create_example_template(templates_dir)
-        # raise Exception('EMPTY templates directory!')
+    # if there doesn't exists a templates directory
+    if not templates_dir or not os.path.exists(templates_dir):
+        helpers.generate_menu_header('SETUP')
+        templates_dir: str = setup.setup_templates_dir()
 
-    # get the list of available templates in the templates dir
-    available_templates: list = os.listdir(templates_dir)
+        documents_dir_path: str = helpers.setup_documents_dir(DOCUMENTS_KEY)
+    
+    # load all the templates and enumerate them on a menu
+    available_templates: List[str] = os.listdir(templates_dir)
+    helpers.generate_menu(available_templates, 'CHOOSE TEMPLATE')
 
-    # generate list of menu options consisting of the templates in the templates dir
-    helpers.generate_menu_options(os.listdir(templates_dir))
-
+    # prompt the user to choose which template they would like to work on
     choice: int = int(input('What template would you like to use? '))
 
+    # load the variables for the chosen template
     template_name: str = available_templates[choice]
     template: str = get_template(f'{templates_dir}/{template_name}')
 
+    # prompt the user to provide values for the template variables and substitue them
     company_name: str
     modified_template: str
     (company_name, modified_template) = substitute_template_variables(template)
 
-    new_cover_letter_path: str = create_cover_letter(company_name, modified_template)
+    # create the cover letter file
+    document_file_name: str = f'{company_name}-cover_letter.txt'
+    new_cover_letter_path: str = create_cover_letter(f'{documents_dir}/{document_file_name}', company_name, modified_template)
 
     print('\n', f'Saved {company_name}-cover-letter.txt to {new_cover_letter_path}', '\n\n', modified_template)
 
