@@ -31,9 +31,21 @@ def dir_is_empty(dirname: str) -> bool:
     return not os.listdir(dirname)
 
 def save_data(data: dict) -> bool:
+    prev = {}
     # load the dir locations JSON data
-    with open('data.dat', 'w+') as outfile:
-        json.dump(data, outfile)
+    with open('data.dat', 'r') as json_file:
+        try:
+            prev = json.load(json_file)
+        except:
+            print(f'data.dat is empty')
+
+    with open('data.dat', 'w') as outfile:
+        # prev = json.load(outfile)
+        new = {**prev, **data}
+
+        json.dump(new, outfile)
+
+    return True
 
 def load_data(key: str) -> str:
     with open('data.dat', 'r') as json_file:
