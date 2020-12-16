@@ -7,7 +7,7 @@ import helpers
 import setup
 
 from typing import List
-from constants import TEMPLATES_KEY, DOCUMENTS_KEY
+from constants import TEMPLATES_KEY, TRANSFORMED_DOCUMENTS_KEY
 
 def substitute_template_variables(template: str) -> tuple:
     # scrape the variables and default values from the template
