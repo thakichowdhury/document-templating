@@ -2,6 +2,9 @@
 
 import os
 import json
+import tkinter as tk
+from tkinter import filedialog
+
 from typing import List
 
 def get_file_dir(file_path: str) -> str:
@@ -30,6 +33,18 @@ def dir_is_empty(dirname: str) -> bool:
     """
     return not os.listdir(dirname)
 
+def setup_documents_dir(dir_name: str) -> str:
+    print(f'Please select a location to store your {dir_name}.')
+
+    dir_path: str = filedialog.askdirectory(title=f'Select folder to store your {dir_name}')
+    documents_dir_path: str = dir_path + f'/{dir_name}'
+
+    create_dir_if_not_exists(documents_dir_path)
+
+    save_data({f'{dir_name}': documents_dir_path})
+
+    return documents_dir_path
+
 def save_data(data: dict) -> bool:
     prev = {}
     # load the dir locations JSON data
@@ -39,8 +54,8 @@ def save_data(data: dict) -> bool:
         except:
             print(f'data.dat is empty')
 
+    # update the dir locations JSON data
     with open('data.dat', 'w') as outfile:
-        # prev = json.load(outfile)
         new = {**prev, **data}
 
         json.dump(new, outfile)
