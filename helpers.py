@@ -65,11 +65,11 @@ def generate_menu_options(options: List[str]) -> None:
 
     print('\n')
 
-def generate_menu(options: List[str], menu_name: str = 'MENU') -> None:
+def generate_menu(choices: List[str], menu_name: str = 'MENU') -> None:
     """
     Generates a command-line menu consisting of a header and menu options
     """
 
-    generate_menu_header(options)
-    generate_menu_options(options)
+    generate_menu_header(menu_name)
+    generate_menu_options(choices)
 
