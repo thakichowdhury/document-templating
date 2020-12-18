@@ -2,4 +2,5 @@
 
 TEMPLATES_KEY = 'templates'
 TRANSFORMED_DOCUMENTS_KEY = 'transformed_documents'
+DATA_FILE = 'data.dat'
 
