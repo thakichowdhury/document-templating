@@ -1,4 +1,5 @@
 *.DS_STORE
 *.swp
 data.dat
+*__pycache__/
 
