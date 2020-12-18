@@ -50,7 +50,7 @@ def get_template(rel_path: str) -> str:
 
     return template
 
-def create_cover_letter(path: str, company_name: str, document_body: str) -> str:
+def create_cover_letter(path: str, str, document_body: str) -> str:
     with open(path, 'w') as f:
         f.write(document_body)
 
