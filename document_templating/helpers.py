@@ -1,11 +1,15 @@
 #! /usr/bin/env python3
 
+from typing import List
+
 import os
 import json
 import tkinter as tk
 from tkinter import filedialog
 
-from typing import List
+from .constants import DATA_FILE, TEMPLATES_KEY
+
+DATA_FILE_PATH = os.getcwd() + '/document_templating/' + DATA_FILE
 
 def get_file_dir(file_path: str) -> str:
     return os.path.dirname(os.path.abspath(file_path))
@@ -48,14 +52,14 @@ def setup_documents_dir(dir_name: str) -> str:
 def save_data(data: dict) -> bool:
     prev = {}
     # load the dir locations JSON data
-    with open('data.dat', 'r') as json_file:
+    with open(DATA_FILE_PATH, 'r') as json_file:
         try:
             prev = json.load(json_file)
         except:
-            print(f'data.dat is empty')
+            print(f'{DATA_FILE_PATH} is empty')
 
     # update the dir locations JSON data
-    with open('data.dat', 'w') as outfile:
+    with open(DATA_FILE_PATH, 'w') as outfile:
         new = {**prev, **data}
 
         json.dump(new, outfile)
@@ -64,7 +68,7 @@ def save_data(data: dict) -> bool:
 
 def load_data(key: str) -> str:
     data: str = ''
-    with open('data.dat', 'r') as json_file:
+    with open(DATA_FILE_PATH, 'r') as json_file:
         try:
             info = json.load(json_file)
             value = info[key]
