@@ -44,11 +44,10 @@ def get_template(rel_path: str) -> str:
     template_file_path = get_abs_file_path(rel_path, __file__)
 
     # read the template cover letter text
-    f = open(template_file_path)
-    template: str = f.read()
-    f.close()
+    with open(template_file_path, 'r') as template_file:
+        template: str = f.read()
 
-    return template
+        return template
 
 def create_cover_letter(path: str, str, document_body: str) -> str:
     with open(path, 'w') as f:
