@@ -1,4 +1,12 @@
+# SYSTEM FILES
 *.DS_STORE
+
+# EDITOR FILES
 *.swp
+
+# LANGUAGE FILES
+*__pycache__/
+
+# PROJECT FILES
 data.dat
 
