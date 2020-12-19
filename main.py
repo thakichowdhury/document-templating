@@ -4,11 +4,12 @@ from typing import List
 
 from os import path, listdir
 
-from document_templating import helpers, setup, document_generator, constants
+from document_templating import helpers, setup, document_generator, scraper
+from document_templating.constants import TRANSFORMED_DOCUMENTS_KEY, TEMPLATES_KEY
 
 if __name__ == '__main__':
     # load the templates directory path
-    templates_dir: str = helpers.load_data(constants.TEMPLATES_KEY)
+    templates_dir: str = helpers.load_data(TEMPLATES_KEY)
 
     # if there doesn't exists a templates directory
     if not templates_dir or not path.exists(templates_dir):
@@ -16,11 +17,11 @@ if __name__ == '__main__':
         templates_dir: str = setup.setup_templates_dir()
 
     # load the transformed documents directory path
-    documents_dir: str = helpers.load_data(constants.TRANSFORMED_DOCUMENTS_KEY)
+    documents_dir: str = helpers.load_data(TRANSFORMED_DOCUMENTS_KEY)
 
     # if there doesn't exists a transformed documents directory
     if not documents_dir or not path.exists(documents_dir):
-        documents_dir: str = helpers.setup_documents_dir(constants.TRANSFORMED_DOCUMENTS_KEY)
+        documents_dir: str = helpers.setup_documents_dir(TRANSFORMED_DOCUMENTS_KEY)
     
     # load all the templates and enumerate them on a menu
     available_templates: List[str] = listdir(templates_dir)
@@ -32,6 +33,12 @@ if __name__ == '__main__':
     # load the variables for the chosen template
     template_name: str = available_templates[choice]
     template: str = document_generator.get_template(f'{templates_dir}/{template_name}')
+
+    print('\n')
+    helpers.generate_menu_header(template_name.upper())
+
+    print(helpers.highlight_variables(template))
+    print('\n')
 
     # prompt the user to provide values for the template variables and substitue them
     company_name: str
