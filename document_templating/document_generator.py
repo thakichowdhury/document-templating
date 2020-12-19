@@ -5,7 +5,7 @@ from typing import List
 import os
 
 from .scraper import scrape_variables, decouple_variable_and_default
-from .helpers import get_abs_file_path
+from .helpers import get_abs_file_path, enclose_text_in_ANSI_colors
 from .setup import setup_templates_dir
 
 def substitute_template_variables(template: str) -> tuple:
@@ -23,7 +23,8 @@ def substitute_template_variables(template: str) -> tuple:
 
         if variable_name not in substitution_values:
             # get the user-input value for the given variable
-            input_value: str = input(f'Enter {variable_name}: ')
+            variable_name_in_color: str = enclose_text_in_ANSI_colors('HEADER', variable_name)
+            input_value: str = input(f'Enter {variable_name_in_color}: ')
 
             # throw exception if there's no given input or default value given to the variable
             if input_value == '' and default_value == None:
@@ -45,7 +46,7 @@ def get_template(rel_path: str) -> str:
 
     # read the template cover letter text
     with open(template_file_path, 'r') as template_file:
-        template: str = f.read()
+        template: str = template_file.read()
 
         return template
 
