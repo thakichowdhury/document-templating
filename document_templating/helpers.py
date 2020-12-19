@@ -7,7 +7,8 @@ import json
 import tkinter as tk
 from tkinter import filedialog
 
-from .constants import DATA_FILE, TEMPLATES_KEY
+from .scraper import scrape_variables, decouple_variable_and_default
+from .constants import DATA_FILE, TEMPLATES_KEY, ANSI_CODE
 
 DATA_FILE_PATH = os.getcwd() + '/document_templating/' + DATA_FILE
 
@@ -123,4 +124,31 @@ def generate_menu(choices: List[str], menu_name: str = 'MENU') -> None:
 
     generate_menu_header(menu_name)
     generate_menu_options(choices)
+
+def enclose_text_in_ANSI_colors(format_key: str, text: str) -> str:
+    return ANSI_CODE[format_key] + text + ANSI_CODE['ENDC']
+
+def format_substrings(ANSI_formatting_code: str, substrings: List[str], text: str) -> str:
+    formatted_text: str = text
+
+    for s in substrings:
+        formatted_s = enclose_text_in_ANSI_colors(ANSI_formatting_code, s)
+        formatted_text = formatted_text.replace(s, formatted_s)
+
+    return formatted_text
+
+def highlight_variables(template: str) -> str:
+    variables: List[str] = scrape_variables(template)
+    default_values: List[str] = []
+
+    for var in variables:
+        (variable_name, default_value) = decouple_variable_and_default(var)
+        if default_value:
+            default_values.append(default_value)
+    
+
+    s: str = format_substrings('HEADER', variables, template)
+    s = format_substrings('OKBLUE', default_values, s)
+
+    return s
 
