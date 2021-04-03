@@ -21,6 +21,7 @@ def substitute_template_variables(template: str) -> tuple:
 
         variable_name, default_value = decouple_variable_and_default(variable)
 
+        print(f'\nEnter a value for the {enclose_text_in_ANSI_colors("HEADER", "template_variable")} or hit the "Enter" key to select the {enclose_text_in_ANSI_colors("OKBLUE", "default value")}.\n')
         if variable_name not in substitution_values:
             # get the user-input value for the given variable
             variable_name_in_color: str = enclose_text_in_ANSI_colors('HEADER', variable_name)
